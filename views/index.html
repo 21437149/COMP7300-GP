@@ -1,0 +1,44 @@
+{% include "head.html" ignore missing %}
+<section class="section">
+    <div class="container">
+        <h1 class="title">
+            Hello World
+        </h1>
+        <p class="subtitle">
+            My first website with <strong>Bulma</strong>!
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="columns is-multiline">
+            {% for item in general_news %}
+            <div class="column is-one-third">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="{{ item.image }}" alt="Image" style="object-fit: cover">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title is-4">{{ item.headline }}</p>
+                                <p class="subtitle is-6">@{{ item.source }}</p>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            {{ item.summary }}
+                            <br>
+                            <time datetime="2016-1-1"></time>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% include "tail.html" ignore missing %}

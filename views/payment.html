@@ -78,7 +78,7 @@
 </section>
 <script>
     async function deleteItem(id) {
-        let response = await fetch(`/income/${id}`, { method: 'DELETE' });
+        let response = await fetch(`/payment/${id}`, { method: 'DELETE' });
         if (response.ok) {
             // location.reload(force);
             location.replace(location.href);

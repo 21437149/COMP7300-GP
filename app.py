@@ -130,8 +130,7 @@ def payment():
             db.session.add(Payment(username=github_user['login'], number=paymentNum, stock="Normal", time=currentTime))
         else:
             db.session.add(Payment(username=github_user['login'], number=paymentNum, stock="Stock", time=currentTime))
-        if paymentNum != '':
-            db.session.commit()
+        db.session.commit()
     paymentNum = Payment.query.filter_by(username=github_user['login'])
     return render_template('payment.html', login=github_user['login'], title=' - Income', paymentNum=paymentNum)
 

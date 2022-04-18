@@ -106,8 +106,8 @@ def income():
         print(github_user['login'])
         db.session.add(Income(username=github_user['login'], number=incomeNum))
         db.session.commit()
-        incomeNum = Income.query.filter_by(username=github_user['login'])
-        return render_template('income.html', login=github_user['login'], title=' - Income', incomeNum=incomeNum)
+        incomeInfo = Income.query.filter_by(username=github_user['login'])
+    return render_template('income.html', login=github_user['login'], title=' - Income', incomeInfo=incomeInfo)
 
 
 @app.route("/payment", methods=['GET', 'POST'])

@@ -19,26 +19,6 @@
             </form>
         </div>
 
-        <!-- {% for item in incomeNum %}
-        <div class="panel-block is-block">
-            <nav class="level">
-                <div class="level-left">
-                    <a class="level-item" onclick="fetchData('{{ item.symbol }}')">
-                        {{ item.username }} {{ item.number }}
-                    </a>
-                </div>
-                <div class="level-right">
-                    <button class="button level-item" onclick="deleteSymbol('{{ item.symbol }}')">
-                        <span class="icon is-left">
-                            <i class="fas fa-trash" aria-hidden="true"></i>
-                        </span>
-                    </button>
-                </div>
-            </nav>
-        </div>
-        {% endfor %} -->
-
-        <br>
         <div class="table-container">
             <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                 <!-- Your table content -->
@@ -60,14 +40,12 @@
                         <td>{{ item.number }}</td>
                         <td>{{ item.time }}</td>
                         <td>
-                            <button class="button" onclick="deleteSymbol('{{ item.id }}')">
+                            <button class="button" onclick="deleteItem('{{ item.id }}')">
                                 <span class="icon is-left">
                                     <i class="fas fa-trash" aria-hidden="true"></i>
                                 </span>
                             </button>
                         </td>
-                     
-
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -75,16 +53,18 @@
         </div>
 
 
-
-
-
-
-
-
-
-
     </div>
 
 
 </section>
+<script>    
+    async function deleteItem(id) {
+        console.log("test");
+        let response = await fetch(`/income/${symbol}`, {method: 'DELETE'});
+        if (response.ok) {
+            location.reload(true);
+        }
+    }
+</script>
+
 {% include "tail.html" ignore missing %}

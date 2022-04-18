@@ -4,30 +4,34 @@
         <h1 class="title">
             Welcome {{ login }}. You are in <strong>payment</strong> page!
         </h1>
+
+        <div>
+            <form class="field has-addons" method="post" action="/payment">
+                <div class="control">
+                    <input name="paymentNum" list="paymentNumList" class="input" type="text" placeholder="Input your payment"
+                        oninput="fetchpaymentNum(this.value)">
+                    <datalist id="paymentNumList"></datalist>
+                </div>
+                <div class="control">
+                    <button type="submit" class="button is-danger">
+                        Submit
+                    </button>
+                    <div>
+                        Payment type:
+                    <label class="radio">
+                        <input type="radio" name="paymentType" value="0" checked>
+                        Normal Payment
+                    </label>
+                    <label class="radio">
+                        <input type="radio" value="1" name="paymentType">
+                        Stock Payment
+                    </label>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <br>
-    <div>
-        <form class="field has-addons" method="post" action="/payment">
-            <div class="control">
-                <input name="paymentNum" list="paymentNumList" class="input" type="text" placeholder="Input your payment"
-                    oninput="fetchpaymentNum(this.value)">
-                <datalist id="paymentNumList"></datalist>
-            </div>
-            <div class="control">
-                <button type="submit" class="button is-danger">
-                    Submit
-                </button>
-                Payment type:
-                <label class="radio">
-                    <input type="radio" name="paymentType" value="0" checked>
-                    Normal Payment
-                </label>
-                <label class="radio">
-                    <input type="radio" value="1" name="paymentType">
-                    Stock Payment
-                </label>
-            </div>
-        </form>
-    </div>
+
+   
 </section>
 {% include "tail.html" ignore missing %}

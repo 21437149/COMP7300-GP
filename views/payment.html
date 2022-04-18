@@ -1,4 +1,7 @@
 {% include "head.html" ignore missing %}
+<style>
+    #submitBtn2,#stockInput{display: none;}
+</style>
 <section class="section">
     <div class="container">
         <h1 class="is-size-3">
@@ -9,11 +12,22 @@
             <form method="post" action="/payment">
                 <div class="field has-addons">
                     <div class="control">
-                        <input name="paymentNum" list="paymentNumList" class="input" type="text"
-                            placeholder="Input your payment" autocomplete="off">
+                        <input name="paymentNum" class="input" type="text" placeholder="Input your payment"
+                            autocomplete="off">
                     </div>
                     <div class="control">
-                        <button type="submit" class="button is-danger">
+                        <button type="submit" class="button is-danger" id="submitBtn1">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+                <div class="field has-addons">
+                    <div class="control" id="stockInput">
+                        <input class="input" type="text" placeholder="Stock name (e.g. AAPL)" name="stockName"
+                            autocomplete="off">
+                    </div>
+                    <div class="control">
+                        <button type="submit" class="button is-danger" id="submitBtn2">
                             Submit
                         </button>
                     </div>
@@ -23,11 +37,11 @@
                     <div class="control">
                         <strong>Payment type:</strong>&nbsp
                         <label class="radio">
-                            <input type="radio" name="paymentType" value="0" checked>
+                            <input type="radio" name="paymentType" value="0" checked onclick="stockInputControl(0)">
                             Normal Payment
                         </label>
                         <label class="radio">
-                            <input type="radio" value="1" name="paymentType">
+                            <input type="radio" value="1" name="paymentType" onclick="stockInputControl(1)">
                             Stock Payment
                         </label>
                     </div>
@@ -37,7 +51,6 @@
 
         <div class="table-container">
             <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-                <!-- Your table content -->
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -51,11 +64,10 @@
                 <tbody>
                     {% for item in paymentNum %}
                     <tr>
-
                         <td>{{ item.id}}</td>
                         <td>{{ item.username }}</td>
                         <td>{{ item.number }}</td>
-                        <td>{{ item.time }}</td>
+                        <td><a href="#">{{ item.stock }}</a></td>
                         <td>{{ item.stock }}</td>
                         <td>
                             <button class="button" onclick="deleteItem('{{ item.id }}')">
@@ -85,6 +97,19 @@
             // document.getElementById('incomeNum').value = "";
         }
     }
+
+    function stockInputControl(visible) {
+            var stockInput = document.getElementById("stockInput");
+            if (visible) {
+                stockInput.style.display = "block";
+                document.getElementById("submitBtn1").style.display = "none";
+                document.getElementById("submitBtn2").style.display = "block";
+            } else {
+                stockInput.style.display = "none";
+                document.getElementById("submitBtn1").style.display = "block";
+                document.getElementById("submitBtn2").style.display = "none";
+            }
+        }
 </script>
 
 {% include "tail.html" ignore missing %}

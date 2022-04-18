@@ -126,7 +126,7 @@ def payment():
         paymentNum = request.form['paymentNum']
         paymentType = request.form['paymentType']
         currentTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        if paymentType == 0:
+        if paymentType == "0":
             db.session.add(Payment(username=github_user['login'], number=paymentNum, stock="Normal", time=currentTime))
         else:
             db.session.add(Payment(username=github_user['login'], number=paymentNum, stock="Stock", time=currentTime))
@@ -136,17 +136,13 @@ def payment():
 
 @app.route("/income/<id>", methods=['DELETE'])
 def deleteIncome(id):
-    print("ID是 " + id)
     if not github.authorized:
         return redirect('/login')
 
-    github_user = github.get("/user").json()
     incomeNum = Income.query.filter_by(id=id)
     for s in incomeNum:
-        print("哈哈")
         db.session.delete(s)
     db.session.commit()
-    incomeNum = Income.query.filter_by(username=github_user['login'])
     return 'ok'
 
 @app.route("/payment/<id>", methods=['DELETE'])
@@ -154,7 +150,6 @@ def deletePayment(id):
     if not github.authorized:
         return redirect('/login')
 
-    github_user = github.get("/user").json()
     paymentNum = Payment.query.filter_by(id=id)
     for s in paymentNum:
         db.session.delete(s)

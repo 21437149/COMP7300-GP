@@ -95,14 +95,14 @@ def portfolio():
     return render_template('portfolio.html', login=github_user['login'], title=' - Portfolio', stocks=stocks)
 
 @app.route("/income", methods=['GET', 'POST'])
-def addIncome():
+def income():
     if not github.authorized:
         return redirect('/login')
     github_user = github.get("/user").json()
     return render_template('income.html', login=github_user['login'], title=' - Income')
 
 @app.route("/payment", methods=['GET', 'POST'])
-def addPayment():
+def payment():
     if not github.authorized:
         return redirect('/login')
     github_user = github.get("/user").json()

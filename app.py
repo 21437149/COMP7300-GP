@@ -133,6 +133,7 @@ def payment():
 
 @app.route("/income/<id>", methods=['DELETE'])
 def deleteIncome(id):
+    print("ID是 " + id)
     if not github.authorized:
         return redirect('/login')
 

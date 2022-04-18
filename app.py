@@ -53,7 +53,7 @@ class UserStock(db.Model):
     def __repr__(self):
         return '<UserStock %r>' % self.username + ' ' + self.symbol
 
-db.drop_all()
+# db.drop_all()
 db.create_all()
 
 

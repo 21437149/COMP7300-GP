@@ -6,3 +6,6 @@ __pycache__
 
 # Database
 test.db
+
+# VS Code
+.vscode

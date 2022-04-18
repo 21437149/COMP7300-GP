@@ -140,9 +140,11 @@ def deleteIncome(id):
     github_user = github.get("/user").json()
     incomeNum = Income.query.filter_by(id=id)
     for s in incomeNum:
+        print("哈哈")
         db.session.delete(s)
     db.session.commit()
-    return 'ok'
+    incomeNum = Income.query.filter_by(username=github_user['login'])
+    return render_template('payment.html', login=github_user['login'], title=' - Income', incomeNum=incomeNum)
 
 @app.route("/payment/<id>", methods=['DELETE'])
 def deletePayment(id):
@@ -150,9 +152,9 @@ def deletePayment(id):
         return redirect('/login')
 
     github_user = github.get("/user").json()
-    incomeNum = Payment.query.filter_by(
-        username=github_user['login'], id=id)
-    db.session.delete(id)
+    paymentNum = Payment.query.filter_by(id=id)
+    for s in paymentNum:
+        db.session.delete(s)
     db.session.commit()
     return 'ok'
 

@@ -8,7 +8,7 @@
         <div>
             <form class="field has-addons" method="post" action="/income">
                 <div class="control">
-                    <input name="incomeNum" list="incomeNumList" class="input" type="text"
+                    <input name="incomeNum" list="incomeNumList" class="input" type="number" min="1" step=".01"
                         placeholder="Input your income" autocomplete="off" id="incomeNum">
                     <datalist id="incomeNumList"></datalist>
                 </div>

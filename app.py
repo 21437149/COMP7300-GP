@@ -4,7 +4,8 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from time import time
 import finnhub
-finnhub_client = finnhub.Client(api_key="c9cdsciad3i8nttpf2pg")
+# finnhub_client = finnhub.Client(api_key="c9cdsciad3i8nttpf2pg")
+finnhub_client = finnhub.Client(api_key="c9ecaqiad3iff7bjnsgg")
 
 # app = Flask(__name__)
 app = Flask(__name__,

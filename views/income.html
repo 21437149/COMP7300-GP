@@ -7,22 +7,19 @@
     </div>
 
     <br>
-        <div>
-            <form class="field has-addons" method="post" action="/income">
-                <div class="control has-icons-left">
-                    <input name="incomeNum" list="incomeNumList" class="input" type="text" placeholder="Input your income"
-                        oninput="fetchincomeNum(this.value)">
-                    <datalist id="incomeNumList"></datalist>
-                    <span class="icon is-left">
-                        <i class="fas fa-search" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <div class="control">
-                    <button type="submit" class="button is-info">
-                        Submit
-                    </button>
-                </div>
-            </form>
-        </div>
+    <div>
+        <form class="field has-addons" method="post" action="/income">
+            <div class="control">
+                <input name="incomeNum" list="incomeNumList" class="input" type="text" placeholder="Input your income"
+                    oninput="fetchincomeNum(this.value)">
+                <datalist id="incomeNumList"></datalist>
+            </div>
+            <div class="control">
+                <button type="submit" class="button is-warning">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
 </section>
 {% include "tail.html" ignore missing %}

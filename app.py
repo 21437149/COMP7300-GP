@@ -137,9 +137,9 @@ def deleteIncome(id):
         return redirect('/login')
 
     github_user = github.get("/user").json()
-    incomeNum = Income.query.filter_by(
-        username=github_user['login'], id=id)
-    db.session.delete(id)
+    incomeNum = Income.query.filter_by(id=id)
+    for s in incomeNum:
+        db.session.delete(s)
     db.session.commit()
     return 'ok'
 

@@ -144,7 +144,7 @@ def deleteIncome(id):
         db.session.delete(s)
     db.session.commit()
     incomeNum = Income.query.filter_by(username=github_user['login'])
-    return render_template('payment.html', login=github_user['login'], title=' - Income', incomeNum=incomeNum)
+    return 'ok'
 
 @app.route("/payment/<id>", methods=['DELETE'])
 def deletePayment(id):

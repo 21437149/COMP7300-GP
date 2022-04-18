@@ -5,5 +5,24 @@
             Welcome {{ login }}. You are in <strong>income</strong> page! 
         </h1>
     </div>
+
+    <br>
+        <div>
+            <form class="field has-addons" method="post" action="/addincome">
+                <div class="control has-icons-left">
+                    <input name="symbol" list="symbolsList" class="input" type="text" placeholder="Input your income"
+                        oninput="fetchSymbols(this.value)">
+                    <datalist id="symbolsList"></datalist>
+                    <span class="icon is-left">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <div class="control">
+                    <button type="submit" class="button is-info">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
 </section>
 {% include "tail.html" ignore missing %}

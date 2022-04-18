@@ -1,2 +1,5 @@
 # IDEA Files
 .idea
+
+# Python running cache
+__pycache__

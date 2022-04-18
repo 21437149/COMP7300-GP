@@ -6,32 +6,85 @@
         </h1><br>
 
         <div>
-            <form class="field has-addons" method="post" action="/payment">
-                <div class="control">
-                    <input name="paymentNum" list="paymentNumList" class="input" type="text" placeholder="Input your payment"
-                        oninput="fetchpaymentNum(this.value)">
-                    <datalist id="paymentNumList"></datalist>
+            <form method="post" action="/payment">
+                <div class="field has-addons">
+                    <div class="control">
+                        <input name="paymentNum" list="paymentNumList" class="input" type="text"
+                            placeholder="Input your payment" autocomplete="off">
+                    </div>
+                    <div class="control">
+                        <button type="submit" class="button is-danger">
+                            Submit
+                        </button>
+                    </div>
                 </div>
-                <div class="control">
-                    <button type="submit" class="button is-danger">
-                        Submit
-                    </button>
-                    <div>
-                        Payment type:
-                    <label class="radio">
-                        <input type="radio" name="paymentType" value="0" checked>
-                        Normal Payment
-                    </label>
-                    <label class="radio">
-                        <input type="radio" value="1" name="paymentType">
-                        Stock Payment
-                    </label>
+
+                <div class="field">
+                    <div class="control">
+                        <strong>Payment type:</strong>&nbsp
+                        <label class="radio">
+                            <input type="radio" name="paymentType" value="0" checked>
+                            Normal Payment
+                        </label>
+                        <label class="radio">
+                            <input type="radio" value="1" name="paymentType">
+                            Stock Payment
+                        </label>
                     </div>
                 </div>
             </form>
+        </div><br>
+
+        <div class="table-container">
+            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                <!-- Your table content -->
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Income</th>
+                        <th>Time</th>
+                        <th>Type</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in paymentNum %}
+                    <tr>
+
+                        <td>{{ item.id}}</td>
+                        <td>{{ item.username }}</td>
+                        <td>{{ item.number }}</td>
+                        <td>{{ item.time }}</td>
+                        <td>{{ item.stock }}</td>
+                        <td>
+                            <button class="button" onclick="deleteItem('{{ item.id }}')">
+                                <span class="icon is-left">
+                                    <i class="fas fa-trash" aria-hidden="true"></i>
+                                </span>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
+
+
+
     </div>
 
    
 </section>
+<script>
+    async function deleteItem(id) {
+        let response = await fetch(`/income/${id}`, { method: 'DELETE' });
+        if (response.ok) {
+            // location.reload(force);
+            location.replace(location.href);
+            // document.getElementById('incomeNum').value = "";
+        }
+    }
+</script>
+
 {% include "tail.html" ignore missing %}

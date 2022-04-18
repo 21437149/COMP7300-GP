@@ -16,7 +16,6 @@
                     <button type="submit" class="button is-warning">
                         Submit
                     </button>
-                    <button type="button" onclick="refreshPage()" class="button is-info">Refresh</button>
                 </div>
             </form>
         </div><br>
@@ -68,16 +67,6 @@
             // document.getElementById('incomeNum').value = "";
         }
     }
-
-    async function refreshPage(){
-        let response = await fetch(`/income`, { method: 'PUT' });
-        if (response.ok) {
-            // location.reload(force);
-            // document.getElementById('incomeNum').value = "";
-        }
-    }
-
-
 
     // When user submit form, post the data to Backend.
     async function postData(elem) {

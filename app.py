@@ -57,13 +57,8 @@ class stockPayment(db.Model):
     def __repr__(self):
         return '<stockPayment %r>' % self.username + ' ' + self.symbol + ' ' + self.number
 
-
 db.drop_all()
 db.create_all()
-# @app.route("/")
-# def hello_world():
-#     return "<p>Hello, World!</p>"
-
 
 @app.route("/")
 def index():
@@ -108,7 +103,10 @@ def payment():
     github_user = github.get("/user").json()
     return render_template('payment.html', login=github_user['login'], title=' - Income')
 
-
+# @app.route("/addIncome", methods=['GET', 'POST'])
+# def payment():
+#
+#     return 0
 
 
 # @app.route("/portfolio/<symbol>", methods=['DELETE'])

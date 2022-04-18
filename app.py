@@ -4,6 +4,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from time import time
 import finnhub
+
 finnhub_client = finnhub.Client(api_key="c9cdsciad3i8nttpf2pg")
 # finnhub_client = finnhub.Client(api_key="c9ecaqiad3iff7bjnsgg")
 
@@ -32,6 +33,7 @@ class UserStock(db.Model):
     def __repr__(self):
         return '<UserStock %r>' % self.username + ' ' + self.symbol
 
+
 class income(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), unique=False, nullable=False)
@@ -40,6 +42,7 @@ class income(db.Model):
     def __repr__(self):
         return '<income %r>' % self.username + ' ' + self.symbol + ' ' + self.number
 
+
 class payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), unique=False, nullable=False)
@@ -47,6 +50,7 @@ class payment(db.Model):
 
     def __repr__(self):
         return '<payment %r>' % self.username + ' ' + self.symbol + ' ' + self.number
+
 
 class stockPayment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -57,8 +61,10 @@ class stockPayment(db.Model):
     def __repr__(self):
         return '<stockPayment %r>' % self.username + ' ' + self.symbol + ' ' + self.number
 
+
 db.drop_all()
 db.create_all()
+
 
 @app.route("/")
 def index():
@@ -89,14 +95,19 @@ def portfolio():
     stocks = UserStock.query.filter_by(username=github_user['login'])
     return render_template('portfolio.html', login=github_user['login'], title=' - Portfolio', stocks=stocks)
 
+
 @app.route("/income", methods=['GET', 'POST'])
 def income():
     if not github.authorized:
         return redirect('/login')
     github_user = github.get("/user").json()
     if request.method == 'POST':
-        return 0
+        incomeNum = request.form['incomeNum']
+        db.session.add(income(username=github_user['login'], number=incomeNum))
+        db.session.commit()
+
     return render_template('income.html', login=github_user['login'], title=' - Income')
+
 
 @app.route("/payment", methods=['GET', 'POST'])
 def payment():
@@ -123,6 +134,3 @@ def payment():
 #         db.session.delete(s)
 #     db.session.commit()
 #     return 'ok'
-
-
-

@@ -106,8 +106,9 @@ def income():
     if request.method == 'POST':
         incomeNum = request.form['incomeNum']
         currentTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        db.session.add(Income(username=github_user['login'], number=incomeNum, time=currentTime))
-        db.session.commit()
+        if incomeNum != '':
+            db.session.add(Income(username=github_user['login'], number=incomeNum, time=currentTime))
+            db.session.commit()
     incomeNum = Income.query.filter_by(username=github_user['login'])
     return render_template('income.html', login=github_user['login'], title=' - Income', incomeNum=incomeNum)
 

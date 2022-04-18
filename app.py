@@ -94,6 +94,8 @@ def income():
     if not github.authorized:
         return redirect('/login')
     github_user = github.get("/user").json()
+    if request.method == 'POST':
+        return 0
     return render_template('income.html', login=github_user['login'], title=' - Income')
 
 @app.route("/payment", methods=['GET', 'POST'])

@@ -2,6 +2,7 @@ from flask import Flask, request, send_from_directory, render_template, redirect
 from flask_dance.contrib.github import make_github_blueprint, github
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
 from time import time
 import finnhub
 import time
@@ -52,16 +53,6 @@ class UserStock(db.Model):
     def __repr__(self):
         return '<UserStock %r>' % self.username + ' ' + self.symbol
 
-class stockPayment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(255), unique=False, nullable=False)
-    number = db.Column(db.Integer, unique=False, nullable=True)
-    stock = db.Column(db.String(255), unique=False, nullable=False)
-
-    def __repr__(self):
-        return '<stockPayment %r>' % self.username + ' ' + self.number
-
-
 db.drop_all()
 db.create_all()
 
@@ -98,12 +89,15 @@ def portfolio():
 
 @app.route("/income", methods=['GET', 'POST'])
 def income():
+    # Get the total number of income
     if not github.authorized:
         return redirect('/login')
     github_user = github.get("/user").json()
+    # print("总数为 " + sum)
     if request.method == 'GET':
         incomeNum = Income.query.filter_by(username=github_user['login'])
-        return render_template('income.html', login=github_user['login'], title=' - Income',incomeNum=incomeNum)
+        sum = db.session.query(func.sum(Income.number)).scalar()
+        return render_template('income.html', login=github_user['login'], title=' - Income',incomeNum=incomeNum, sum=sum)
     if request.method == 'POST':
         incomeNum = request.form['incomeNum']
         currentTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -111,7 +105,8 @@ def income():
             db.session.add(Income(username=github_user['login'], number=incomeNum, time=currentTime))
             db.session.commit()
     incomeNum = Income.query.filter_by(username=github_user['login'])
-    return render_template('income.html', login=github_user['login'], title=' - Income', incomeNum=incomeNum)
+    sum = db.session.query(func.sum(Income.number)).scalar()
+    return render_template('income.html', login=github_user['login'], title=' - Income', incomeNum=incomeNum, sum=sum)
 
 
 @app.route("/payment", methods=['GET', 'POST'])
@@ -121,7 +116,8 @@ def payment():
     github_user = github.get("/user").json()
     if request.method == 'GET':
         paymentNum = Payment.query.filter_by(username=github_user['login'])
-        return render_template('payment.html', login=github_user['login'], title=' - Income', paymentNum=paymentNum)
+        # sum = db.session.query(func.sum(Payment.number).filter(Payment.==1)).scalar()
+        return render_template('payment.html', login=github_user['login'], title=' - Income', paymentNum=paymentNum, sum=sum)
     if request.method == 'POST':
         paymentNum = request.form['paymentNum']
         paymentType = request.form['paymentType']

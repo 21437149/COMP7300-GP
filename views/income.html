@@ -1,14 +1,15 @@
 {% include "head.html" ignore missing %}
 <section class="section">
     <div class="container">
-        <h1 class="title">
-            Welcome {{ login }}! You are in income page.
+        <h1 class="is-size-3">
+            Welcome! <strong>{{ login }}</strong> You are in income page.
         </h1><br>
-        <div class="panel-block">
+        <!-- onsubmit="postData(this);return false;"  -->
+        <div>
             <form class="field has-addons" method="post" action="/income">
                 <div class="control">
                     <input name="incomeNum" list="incomeNumList" class="input" type="text"
-                        placeholder="Input your income" autocomplete="off">
+                        placeholder="Input your income" autocomplete="off" id="incomeNum">
                     <datalist id="incomeNumList"></datalist>
                 </div>
                 <div class="control">
@@ -17,7 +18,7 @@
                     </button>
                 </div>
             </form>
-        </div>
+        </div><br>
 
         <div class="table-container">
             <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -34,7 +35,7 @@
                 <tbody>
                     {% for item in incomeNum %}
                     <tr>
-                        
+
                         <td>{{ item.id}}</td>
                         <td>{{ item.username }}</td>
                         <td>{{ item.number }}</td>
@@ -57,13 +58,37 @@
 
 
 </section>
-<script>    
+<script>
     async function deleteItem(id) {
         console.log("test");
-        let response = await fetch(`/income/${id}`, {method: 'DELETE'});
+        let response = await fetch(`/income/${id}`, { method: 'DELETE' });
         if (response.ok) {
-            location.reload(true);
+            // location.reload(force);
+            location.replace(location.href);
+            // document.getElementById('incomeNum').value = "";
         }
+    }
+
+    // When user submit form, post the data to Backend.
+    async function postData(elem) {
+        let response = await fetch(elem.action, {
+            method: elem.method,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams(new FormData(elem))
+        });
+        // console.log(response);
+        if (response.ok) {
+            // var data = await response.json();
+            // console.log(JSON.stringify(data));
+            // alert("Submit successful.");
+            console.log("OK")
+        } else {
+            alert(response.status + " " + response.statusCode);
+        }
+        // await getData();
+
     }
 </script>
 

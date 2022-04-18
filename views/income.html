@@ -69,7 +69,7 @@
         }
     }
 
-    function refreshPage(){
+    async function refreshPage(){
         let response = await fetch(`/income`, { method: 'PUT' });
         if (response.ok) {
             // location.reload(force);

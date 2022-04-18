@@ -32,6 +32,31 @@ class UserStock(db.Model):
     def __repr__(self):
         return '<UserStock %r>' % self.username + ' ' + self.symbol
 
+class income(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(255), unique=False, nullable=False)
+    number = db.Column(db.Integer, unique=False, nullable=True)
+
+    def __repr__(self):
+        return '<income %r>' % self.username + ' ' + self.symbol + ' ' + self.number
+
+class payment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(255), unique=False, nullable=False)
+    number = db.Column(db.Integer, unique=False, nullable=True)
+
+    def __repr__(self):
+        return '<payment %r>' % self.username + ' ' + self.symbol + ' ' + self.number
+
+class stockPayment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(255), unique=False, nullable=False)
+    number = db.Column(db.Integer, unique=False, nullable=True)
+    stock = db.Column(db.String(255), unique=False, nullable=False)
+
+    def __repr__(self):
+        return '<stockPayment %r>' % self.username + ' ' + self.symbol + ' ' + self.number
+
 
 db.drop_all()
 db.create_all()
@@ -69,16 +94,27 @@ def portfolio():
     stocks = UserStock.query.filter_by(username=github_user['login'])
     return render_template('portfolio.html', login=github_user['login'], title=' - Portfolio', stocks=stocks)
 
-
-@app.route("/portfolio/<symbol>", methods=['DELETE'])
-def deletePortfolio(symbol):
+@app.route("/addIncome", methods=['POST'])
+def addIncome():
     if not github.authorized:
         return redirect('/login')
-
     github_user = github.get("/user").json()
-    stocks = UserStock.query.filter_by(
-        username=github_user['login'], symbol=symbol)
-    for s in stocks:
-        db.session.delete(s)
-    db.session.commit()
-    return 'ok'
+
+
+
+
+# @app.route("/portfolio/<symbol>", methods=['DELETE'])
+# def deletePortfolio(symbol):
+#     if not github.authorized:
+#         return redirect('/login')
+#
+#     github_user = github.get("/user").json()
+#     stocks = UserStock.query.filter_by(
+#         username=github_user['login'], symbol=symbol)
+#     for s in stocks:
+#         db.session.delete(s)
+#     db.session.commit()
+#     return 'ok'
+
+
+

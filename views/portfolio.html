@@ -72,7 +72,7 @@
 
     async function fetchSymbols(query) {
         if (query.length <= 3) return;
-        let response = await fetch(`https://finnhub.io/api/v1/search?q=${encodeURI(query)}&token=c9ecaqiad3iff7bjnsgg`);
+        let response = await fetch(`https://finnhub.io/api/v1/search?q=${encodeURI(query)}&token=c9cdsciad3i8nttpf2pg`);
         if (response.ok) {
             let symbolsList = document.getElementById('symbolsList');
             let data = await response.json();
@@ -237,7 +237,7 @@
     chartInit();
 
     async function fetchData(symbol) {
-        let response = await fetch(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=D&from=${parseInt(Date.now() / 1000 - 3600 * 24 * 365 * 2)}&to=${parseInt(Date.now() / 1000)}&token=c9ecaqiad3iff7bjnsgg`);
+        let response = await fetch(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=D&from=${parseInt(Date.now() / 1000 - 3600 * 24 * 365 * 2)}&to=${parseInt(Date.now() / 1000)}&token=c9cdsciad3i8nttpf2pg`);
         if (response.ok) {
             let rawdata = await response.json();
 

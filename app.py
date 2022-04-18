@@ -99,6 +99,14 @@ def addIncome():
     if not github.authorized:
         return redirect('/login')
     github_user = github.get("/user").json()
+    return render_template('income.html', login=github_user['login'], title=' - Income')
+
+@app.route("/addPayment", methods=['POST'])
+def addPayment():
+    if not github.authorized:
+        return redirect('/login')
+    github_user = github.get("/user").json()
+    return render_template('payment.html', login=github_user['login'], title=' - Income')
 
 
 

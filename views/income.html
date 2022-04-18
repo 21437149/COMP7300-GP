@@ -16,6 +16,7 @@
                     <button type="submit" class="button is-warning">
                         Submit
                     </button>
+                    <button type="button" onclick="refreshPage()" class="button is-info">Refresh</button>
                 </div>
             </form>
         </div><br>
@@ -60,7 +61,6 @@
 </section>
 <script>
     async function deleteItem(id) {
-        console.log("test");
         let response = await fetch(`/income/${id}`, { method: 'DELETE' });
         if (response.ok) {
             // location.reload(force);
@@ -68,6 +68,16 @@
             // document.getElementById('incomeNum').value = "";
         }
     }
+
+    function refreshPage(){
+        let response = await fetch(`/income`, { method: 'PUT' });
+        if (response.ok) {
+            // location.reload(force);
+            // document.getElementById('incomeNum').value = "";
+        }
+    }
+
+
 
     // When user submit form, post the data to Backend.
     async function postData(elem) {

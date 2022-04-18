@@ -4,6 +4,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from time import time
 import finnhub
+import time
 
 finnhub_client = finnhub.Client(api_key="c9cdsciad3i8nttpf2pg")
 # finnhub_client = finnhub.Client(api_key="c9ecaqiad3iff7bjnsgg")
@@ -28,9 +29,20 @@ class Income(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), unique=False, nullable=False)
     number = db.Column(db.Integer, unique=False, nullable=False)
+    time = db.Column(db.String(255), unique=False, nullable=False)
 
     def __repr__(self):
         return '<income %r>' % self.username + ' ' + self.number
+
+class Payment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(255), unique=False, nullable=False)
+    number = db.Column(db.Integer, unique=False, nullable=True)
+    stock = db.Column(db.String(255), unique=False, nullable=False)
+    time = db.Column(db.String(255), unique=False, nullable=False)
+
+    def __repr__(self):
+        return '<payment %r>' % self.username + ' ' + self.symbol + ' ' + self.number
 
 class UserStock(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -39,16 +51,6 @@ class UserStock(db.Model):
 
     def __repr__(self):
         return '<UserStock %r>' % self.username + ' ' + self.symbol
-
-class Payment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(255), unique=False, nullable=False)
-    number = db.Column(db.Integer, unique=False, nullable=True)
-    stock = db.Column(db.String(255), unique=False, nullable=False)
-
-    def __repr__(self):
-        return '<payment %r>' % self.username + ' ' + self.symbol + ' ' + self.number
-
 
 class stockPayment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -103,8 +105,8 @@ def income():
         return render_template('income.html', login=github_user['login'], title=' - Income')
     if request.method == 'POST':
         incomeNum = request.form['incomeNum']
-        print(github_user['login'])
-        db.session.add(Income(username=github_user['login'], number=incomeNum))
+        currentTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        db.session.add(Income(username=github_user['login'], number=incomeNum, time=currentTime))
         db.session.commit()
     incomeNum = Income.query.filter_by(username=github_user['login'])
     return render_template('income.html', login=github_user['login'], title=' - Income', incomeNum=incomeNum)
@@ -120,10 +122,11 @@ def payment():
     if request.method == 'POST':
         paymentNum = request.form['paymentNum']
         paymentType = request.form['paymentType']
+        currentTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         if paymentType == 0:
-            db.session.add(Payment(username=github_user['login'], number=paymentNum, stock="Normal"))
+            db.session.add(Payment(username=github_user['login'], number=paymentNum, stock="Normal", time=currentTime))
         else:
-            db.session.add(Payment(username=github_user['login'], number=paymentNum, stock="Stock"))
+            db.session.add(Payment(username=github_user['login'], number=paymentNum, stock="Stock", time=currentTime))
         db.session.commit()
     paymentNum = Payment.query.filter_by(username=github_user['login'])
     return render_template('payment.html', login=github_user['login'], title=' - Income', paymentNum=paymentNum)

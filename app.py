@@ -116,7 +116,7 @@ def payment():
     github_user = github.get("/user").json()
     if request.method == 'GET':
         paymentNum = Payment.query.filter_by(username=github_user['login'])
-        # sum = db.session.query(func.sum(Payment.number).filter(Payment.==1)).scalar()
+        sum = db.session.query(func.sum(Payment.number)).scalar()
         return render_template('payment.html', login=github_user['login'], title=' - Income', paymentNum=paymentNum, sum=sum)
     if request.method == 'POST':
         paymentNum = request.form['paymentNum']
@@ -129,7 +129,8 @@ def payment():
             db.session.add(Payment(username=github_user['login'], number=paymentNum, stock=stockName, time=currentTime))
         db.session.commit()
     paymentNum = Payment.query.filter_by(username=github_user['login'])
-    return render_template('payment.html', login=github_user['login'], title=' - Income', paymentNum=paymentNum)
+    sum = db.session.query(func.sum(Payment.number)).scalar()
+    return render_template('payment.html', login=github_user['login'], title=' - Income', paymentNum=paymentNum, sum=sum)
 
 @app.route("/income/<id>", methods=['DELETE'])
 def deleteIncome(id):

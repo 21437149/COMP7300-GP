@@ -131,6 +131,31 @@ def payment():
     paymentNum = Payment.query.filter_by(username=github_user['login'])
     return render_template('payment.html', login=github_user['login'], title=' - Income', paymentNum=paymentNum)
 
+@app.route("/income/<id>", methods=['DELETE'])
+def deleteIncome(id):
+    if not github.authorized:
+        return redirect('/login')
+
+    github_user = github.get("/user").json()
+    incomeNum = Income.query.filter_by(
+        username=github_user['login'], id=id)
+    db.session.delete(id)
+    db.session.commit()
+    return 'ok'
+
+@app.route("/payment/<id>", methods=['DELETE'])
+def deletePayment(id):
+    if not github.authorized:
+        return redirect('/login')
+
+    github_user = github.get("/user").json()
+    incomeNum = Payment.query.filter_by(
+        username=github_user['login'], id=id)
+    db.session.delete(id)
+    db.session.commit()
+    return 'ok'
+
+
 # @app.route("/addIncome", methods=['GET', 'POST'])
 # def payment():
 #

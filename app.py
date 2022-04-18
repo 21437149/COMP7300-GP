@@ -105,8 +105,8 @@ def income():
         incomeNum = request.form['incomeNum']
         db.session.add(income(username=github_user['login'], number=incomeNum))
         db.session.commit()
-
-    return render_template('income.html', login=github_user['login'], title=' - Income')
+    incomeNum = income.query.filter_by(username=github_user['login'])
+    return render_template('income.html', login=github_user['login'], title=' - Income', incomeNum=incomeNum)
 
 
 @app.route("/payment", methods=['GET', 'POST'])
@@ -114,7 +114,16 @@ def payment():
     if not github.authorized:
         return redirect('/login')
     github_user = github.get("/user").json()
-    return render_template('payment.html', login=github_user['login'], title=' - Income')
+    if request.method == 'POST':
+        paymentNum = request.form['paymentNum']
+        paymentType = request.form['paymentType']
+        if paymentType == 0:
+            db.session.add(payment(username=github_user['login'], number=paymentNum, stock="Normal"))
+        else:
+            db.session.add(payment(username=github_user['login'], number=paymentNum, stock="Stock"))
+        db.session.commit()
+    paymentNum = payment.query.filter_by(username=github_user['login'])
+    return render_template('payment.html', login=github_user['login'], title=' - Income', paymentNum=paymentNum)
 
 # @app.route("/addIncome", methods=['GET', 'POST'])
 # def payment():

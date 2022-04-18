@@ -60,7 +60,7 @@
 <script>    
     async function deleteItem(id) {
         console.log("test");
-        let response = await fetch(`/income/${symbol}`, {method: 'DELETE'});
+        let response = await fetch(`/income/${id}`, {method: 'DELETE'});
         if (response.ok) {
             location.reload(true);
         }

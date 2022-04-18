@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hello Bulma! {{ title }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -26,19 +28,17 @@
 
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" href="/">
-                    Home
-                </a>
+                <a class="navbar-item" href="/">Home</a>
+                <a class="navbar-item" href="/portfolio">Portfolio</a>
+                <a class="navbar-item" href="/addIncome">Income</a>
+                <a class="navbar-item" href="/addPayment">Payment</a>
 
-                <a class="navbar-item" href="/portfolio">
-                    Portfolio
-                </a>
             </div>
 
             <div class="navbar-end">
                 <div class="navbar-item">
                     {% if login %}
-                        Welcome back! {{ login }}
+                    Welcome back! {{ login }}
                     {% else %}
                     <div class="buttons">
                         <a class="button is-primary">

@@ -24,14 +24,14 @@
                 </div>
             </form>
         </div>
-{{ incomeNum }}
+
 
         {% for item in incomeNum %}
         <div class="panel-block is-block">
             <nav class="level">
                 <div class="level-left">
                     <a class="level-item" onclick="fetchData('{{ item.symbol }}')">
-                        {{ item.username }}{{ item.number }}
+                        {{ item.username }} {{ item.number }}
                     </a>
                 </div>
                 <div class="level-right">

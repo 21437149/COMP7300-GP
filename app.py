@@ -102,10 +102,8 @@ def income():
         return redirect('/login')
     github_user = github.get("/user").json()
     if request.method == 'GET':
-        return render_template('income.html', login=github_user['login'], title=' - Income')
-    if request.method == 'PUT':
         incomeNum = Income.query.filter_by(username=github_user['login'])
-        return render_template('income.html', login=github_user['login'], title=' - Income', incomeNum=incomeNum)
+        return render_template('income.html', login=github_user['login'], title=' - Income',incomeNum=incomeNum)
     if request.method == 'POST':
         incomeNum = request.form['incomeNum']
         currentTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -122,7 +120,8 @@ def payment():
         return redirect('/login')
     github_user = github.get("/user").json()
     if request.method == 'GET':
-        return render_template('payment.html', login=github_user['login'], title=' - Income')
+        paymentNum = Payment.query.filter_by(username=github_user['login'])
+        return render_template('payment.html', login=github_user['login'], title=' - Income', paymentNum=paymentNum)
     if request.method == 'POST':
         paymentNum = request.form['paymentNum']
         paymentType = request.form['paymentType']

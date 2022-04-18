@@ -7,14 +7,14 @@
 
     #chartdiv {
         width: 100%;
-        height: 500px;
+        height: 650px;
         max-width: 100%
     }
 </style>
 <section class="section">
     <div class="container">
         <h1 class="is-size-3">
-            Welcome! <strong>{{ login }}</strong> You are in payment page.
+            Welcome <strong>{{ login }}</strong>! You are in payment page.
         </h1><br>
 
         <div>
@@ -87,6 +87,10 @@
                         </td>
                     </tr>
                     {% endfor %}
+                    <tr>
+                        <td colspan="4" style="text-align: right; font-size: 2rem;">Sum:</td>
+                        <td colspan="2" style="font-size: 2rem; ">HKD$: {{sum}}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>

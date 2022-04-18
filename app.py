@@ -101,6 +101,8 @@ def income():
     if not github.authorized:
         return redirect('/login')
     github_user = github.get("/user").json()
+    if request.method == 'GET':
+        return render_template('income.html', login=github_user['login'], title=' - Income')
     if request.method == 'POST':
         incomeNum = request.form['incomeNum']
         db.session.add(income(username=github_user['login'], number=incomeNum))
@@ -114,6 +116,8 @@ def payment():
     if not github.authorized:
         return redirect('/login')
     github_user = github.get("/user").json()
+    if request.method == 'GET':
+        return render_template('payment.html', login=github_user['login'], title=' - Income')
     if request.method == 'POST':
         paymentNum = request.form['paymentNum']
         paymentType = request.form['paymentType']

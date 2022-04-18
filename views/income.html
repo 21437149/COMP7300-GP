@@ -2,24 +2,39 @@
 <section class="section">
     <div class="container">
         <h1 class="title">
-            Welcome {{ login }}. You are in <strong>income</strong> page! 
-        </h1>
+            Welcome {{ login }}. You are in <strong>income</strong> page!
+        </h1><br>
+
+
+
+
+
+
+        <div class="panel-block">
+            <form class="field has-addons" method="post" action="/income">
+                <div class="control">
+                    <input name="incomeNum" list="incomeNumList" class="input" type="text"
+                        placeholder="Input your income" autocomplete="off">
+                    <datalist id="incomeNumList"></datalist>
+                </div>
+                <div class="control">
+                    <button type="submit" class="button is-warning">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+{{ incomeNum }}
+
+
+
+
+
+
+
+
     </div>
 
-    <br>
-    <div>
-        <form class="field has-addons" method="post" action="/income">
-            <div class="control">
-                <input name="incomeNum" list="incomeNumList" class="input" type="text" placeholder="Input your income"
-                    oninput="fetchincomeNum(this.value)">
-                <datalist id="incomeNumList"></datalist>
-            </div>
-            <div class="control">
-                <button type="submit" class="button is-warning">
-                    Submit
-                </button>
-            </div>
-        </form>
-    </div>
+
 </section>
 {% include "tail.html" ignore missing %}

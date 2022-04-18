@@ -4,12 +4,6 @@
         <h1 class="title">
             Welcome {{ login }}! You are in income page.
         </h1><br>
-
-
-
-
-
-
         <div class="panel-block">
             <form class="field has-addons" method="post" action="/income">
                 <div class="control">
@@ -25,8 +19,7 @@
             </form>
         </div>
 
-
-        {% for item in incomeNum %}
+        <!-- {% for item in incomeNum %}
         <div class="panel-block is-block">
             <nav class="level">
                 <div class="level-left">
@@ -36,14 +29,52 @@
                 </div>
                 <div class="level-right">
                     <button class="button level-item" onclick="deleteSymbol('{{ item.symbol }}')">
-                    <span class="icon is-left">
-                        <i class="fas fa-trash" aria-hidden="true"></i>
-                    </span>
+                        <span class="icon is-left">
+                            <i class="fas fa-trash" aria-hidden="true"></i>
+                        </span>
                     </button>
                 </div>
             </nav>
         </div>
-        {% endfor %}
+        {% endfor %} -->
+
+        <br>
+        <div class="table-container">
+            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                <!-- Your table content -->
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Income</th>
+                        <th>Time</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in incomeNum %}
+                    <tr>
+                        
+                        <td>{{ item.id}}</td>
+                        <td>{{ item.username }}</td>
+                        <td>{{ item.number }}</td>
+                        <td>{{ item.time }}</td>
+                        <td>
+                            <button class="button" onclick="deleteSymbol('{{ item.id }}')">
+                                <span class="icon is-left">
+                                    <i class="fas fa-trash" aria-hidden="true"></i>
+                                </span>
+                            </button>
+                        </td>
+                     
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
 
 
 

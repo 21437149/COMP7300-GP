@@ -3,3 +3,6 @@
 
 # Python running cache
 __pycache__
+
+# Database
+test.db

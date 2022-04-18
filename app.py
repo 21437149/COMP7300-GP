@@ -24,6 +24,13 @@ app.register_blueprint(make_github_blueprint(), url_prefix="/login")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./test.db'
 db = SQLAlchemy(app)
 
+class Income(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(255), unique=False, nullable=False)
+    number = db.Column(db.Integer, unique=False, nullable=False)
+
+    def __repr__(self):
+        return '<income %r>' % self.username + ' ' + self.number
 
 class UserStock(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -33,20 +40,11 @@ class UserStock(db.Model):
     def __repr__(self):
         return '<UserStock %r>' % self.username + ' ' + self.symbol
 
-
-class income(db.Model):
+class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), unique=False, nullable=False)
     number = db.Column(db.Integer, unique=False, nullable=True)
-
-    def __repr__(self):
-        return '<income %r>' % self.username + ' ' + self.symbol + ' ' + self.number
-
-
-class payment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(255), unique=False, nullable=False)
-    number = db.Column(db.Integer, unique=False, nullable=True)
+    stock = db.Column(db.String(255), unique=False, nullable=False)
 
     def __repr__(self):
         return '<payment %r>' % self.username + ' ' + self.symbol + ' ' + self.number
@@ -59,7 +57,7 @@ class stockPayment(db.Model):
     stock = db.Column(db.String(255), unique=False, nullable=False)
 
     def __repr__(self):
-        return '<stockPayment %r>' % self.username + ' ' + self.symbol + ' ' + self.number
+        return '<stockPayment %r>' % self.username + ' ' + self.number
 
 
 db.drop_all()
@@ -105,9 +103,10 @@ def income():
         return render_template('income.html', login=github_user['login'], title=' - Income')
     if request.method == 'POST':
         incomeNum = request.form['incomeNum']
-        db.session.add(income(username=github_user['login'], number=incomeNum))
+        print(github_user['login'])
+        db.session.add(Income(username=github_user['login'], number=incomeNum))
         db.session.commit()
-    incomeNum = income.query.filter_by(username=github_user['login'])
+    incomeNum = Income.query.filter_by(username=github_user['login'])
     return render_template('income.html', login=github_user['login'], title=' - Income', incomeNum=incomeNum)
 
 
@@ -122,11 +121,11 @@ def payment():
         paymentNum = request.form['paymentNum']
         paymentType = request.form['paymentType']
         if paymentType == 0:
-            db.session.add(payment(username=github_user['login'], number=paymentNum, stock="Normal"))
+            db.session.add(Payment(username=github_user['login'], number=paymentNum, stock="Normal"))
         else:
-            db.session.add(payment(username=github_user['login'], number=paymentNum, stock="Stock"))
+            db.session.add(Payment(username=github_user['login'], number=paymentNum, stock="Stock"))
         db.session.commit()
-    paymentNum = payment.query.filter_by(username=github_user['login'])
+    paymentNum = Payment.query.filter_by(username=github_user['login'])
     return render_template('payment.html', login=github_user['login'], title=' - Income', paymentNum=paymentNum)
 
 # @app.route("/addIncome", methods=['GET', 'POST'])

@@ -122,6 +122,7 @@ def payment():
         paymentNum = request.form['paymentNum']
         paymentType = request.form['paymentType']
         stockName = request.form['stockName']
+        stockName = stockName.upper()
         currentTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         if paymentType == "0":
             db.session.add(Payment(username=github_user['login'], number=paymentNum, stock="Normal", time=currentTime))

@@ -45,13 +45,12 @@ class Payment(db.Model):
     def __repr__(self):
         return '<payment %r>' % self.username + ' ' + self.symbol + ' ' + self.number
 
-class UserStock(db.Model):
+class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), unique=False, nullable=False)
-    symbol = db.Column(db.String(50), unique=False, nullable=False)
 
     def __repr__(self):
-        return '<UserStock %r>' % self.username + ' ' + self.symbol
+        return '<Users %r>' % self.username + ' ' + self.username
 
 # db.drop_all()
 db.create_all()
@@ -72,20 +71,6 @@ def login():
     if not github.authorized:
         return redirect(url_for("github.login"))
     return redirect('/')
-
-
-@app.route("/portfolio", methods=['GET', 'POST'])
-def portfolio():
-    if not github.authorized:
-        return redirect('/login')
-    github_user = github.get("/user").json()
-    if request.method == 'POST':
-        symbol = request.form['symbol']
-        db.session.add(UserStock(username=github_user['login'], symbol=symbol))
-        db.session.commit()
-    stocks = UserStock.query.filter_by(username=github_user['login'])
-    return render_template('portfolio.html', login=github_user['login'], title=' - Portfolio', stocks=stocks)
-
 
 @app.route("/income", methods=['GET', 'POST'])
 def income():
